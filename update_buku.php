@@ -1,3 +1,16 @@
+<?php 
+
+include_once "config.php";
+
+$id_buku = $_GET['id'];
+echo $id_buku;
+$sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND id_buku='$id_buku'";
+
+$data=mysqli_query($conn,$sql);
+
+$result=mysqli_fetch_array($data);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +26,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-danger ">
             <div class="container-fluid d-flex justify-content-center">
-                <p class="fw-normal fs-4 fw-light text-white">Data Buku Perpustakaan</p>
+                <p class="fw-normal fs-4 fw-light text-white">Update Data Buku</p>
             </div>
         </nav>
     </header>
@@ -23,37 +36,36 @@
                 <div class="col-md-6">
                     <div class="card rounded-0 shadow">
                         <div class="card-header bg-primary p-n1">
-                            <h3 class="d-flex justify-content-center text-white">Judul Buku</h3>
+                            <h3 class="d-flex justify-content-center text-white">Update Buku</h3>
                         </div>
                         <div class="card-body">
-                            <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"];?>">
+                            <form method="post" class="d-grid gap-3" action="">
                                 <div class="form-group">
                                     <label for="judulBuku">Judul Buku: </label>
-                                    <input type="text" class="form-control" placeholder="Judul Buku" name="judulBuku" id=judulBuku required>
+                                    <input type="text" class="form-control" placeholder="Judul Buku" name="judulBuku" id=judulBuku value="<?php echo $result['judul_buku']; ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="pengarang">Pengarang : </label>
-                                    <input type="text" class="form-control" placeholder="Nama Pengarang" name="pengarang" id="pengarang" required>
+                                    <input type="text" class="form-control" placeholder="Nama Pengarang" name="pengarang" id="pengarang" value="<?php echo $result['pengarang']; ?>"  required >
                                 </div>
                                 <div class="form-group">
                                     <label for="penerbit">Penerbit : </label>
-                                    <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Penerbit" name="penerbit" id="penerbit" required>
+                                    <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Penerbit" name="penerbit" id="penerbit" value="<?php echo $result['penerbit']; ?>"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jumlahHalaman">Jumlah Halaman : </label>
-                                    <input type="number" class="form-control" placeholder="Jumlah halaman" name="jumlahHalaman" id="jumlahHalaman" required>
+                                    <input type="number" class="form-control" placeholder="Jumlah halaman" name="jumlahHalaman" id="jumlahHalaman"  value="<?php echo $result['jumlah_halaman']; ?>"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="tahunTerbit">Tahun Terbit :</label>
-                                    <input type="number" class="form-control" placeholder="Tahun Terbit" name="tahunTerbit" id="tahunTerbit" required>
+                                    <input type="number" class="form-control" placeholder="Tahun Terbit" name="tahunTerbit" id="tahunTerbit"  value="<?php echo $result['tahun_terbit']; ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kategoriBuku">Kategori Buku :</label>
-                                    <select class="form-select" aria-label="Default select example" name="id_kategori" required>
-                                        <option selected>Pilih kategori</option>
+                                    <select class="form-select" aria-label="Default select example" name="id_kategori"required>
                                         <?php
+                                         echo "<option value=$result[id_kategori]> $result[nama_ketegori]  </option>";
 
-                                        include "config.php";
                                         $sql = "SELECT * FROM kategori_buku";
                                         $query = mysqli_query($conn, $sql);
                                        
@@ -66,7 +78,7 @@
                                 </div> 
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
-                                        <button type="submit" class="btn btn-success col-md-3" name="submit">Submit</button>
+                                        <input type="submit" class="btn btn-success col-md-3" name="submit">
                                         <button type="submit" class="btn btn-danger col-md-3"><a href="./buku.php" style="text-decoration: none !important; color: white;">Keluar</a></button>
                                     </div>
                                 </div>
@@ -77,9 +89,12 @@
             </div>
         </div>
     </div>
-    <?php 
     
-    require_once("config.php");
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</html>
+<?php 
     if(isset($_POST['submit'])) {
 
 
@@ -89,20 +104,22 @@
         $jumlahHalaman = $_POST['jumlahHalaman'];
         $tahunTerbit = $_POST['tahunTerbit'];
         $kategori = $_POST['id_kategori'];
+     
+        $hasil = "UPDATE buku SET
+        judul_buku= '$judulBuku', 
+        pengarang = '$pengarangBuku', 
+        penerbit = '$penerbitBuku', 
+        jumlah_halaman	 = '$jumlahHalaman',
+        tahun_terbit = '$tahunTerbit',
+        id_kategori = '$kategori' WHERE id_buku='$id_buku'";
 
-        $sql = "INSERT INTO buku (judul_buku,pengarang,	penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('".$judulBuku."','".$pengarangBuku."','".$penerbitBuku."','".$jumlahHalaman."','".$tahunTerbit."','".$kategori."')";
-
-        $result = mysqli_query($conn,$sql);
-        if($result){
+        $result = mysqli_query($conn,$hasil);
+        if($result) {
             echo "<script>
-            alert('Data Berhasil Ditambahkan');
-            location.href ='buku.php';
+                alert('Berhasil mengubah data buku');
+                location.href ='buku.php';
+                </script>";
             
-            </script>";
         }
     }
     ?>
-</body>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</html>

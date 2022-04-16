@@ -26,10 +26,10 @@
                             <h3 class="d-flex justify-content-center text-white">Tambah Kategori Buku</h3>
                         </div>
                         <div class="card-body">
-                            <form method="post" class="d-grid gap-3" action="">
+                            <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"];?>">
                                 <div class="form-group">
                                     <label for="judulBuku">Kategori Buku: </label>
-                                    <input type="text" class="form-control" placeholder="Judul Buku" name="kategori" id=judulBuku>
+                                    <input type="text" class="form-control" placeholder="Judul Buku" name="kategori" id=judulBuku required>
                                 </div>
                         
                                 <div class="form-group">
@@ -48,16 +48,11 @@
     <?php 
     require_once("config.php");
     if(isset($_POST['submit'])){
-        if(empty($_POST['kategori'])){
-            echo "<script>alert('Silahkan Masukan Kategori')</script>";
-        } else {
-            $kategori = $_POST['kategori'];
-
-            $sql = "INSERT INTO kategori_buku (nama_ketegori) VALUES ('".$kategori."')";
-            $result = mysqli_query($conn,$sql);
-            echo "<script>alert('Data Berhasil Ditambahkan')</script>";
-        }
-      
+         
+        $kategori = $_POST['kategori'];
+        $sql = "INSERT INTO kategori_buku (nama_ketegori) VALUES ('".$kategori."')";
+        $result = mysqli_query($conn,$sql);
+        echo "<script>alert('Data Berhasil Ditambahkan')</script>";
     }
 
     ?>
