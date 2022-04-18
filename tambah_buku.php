@@ -83,12 +83,12 @@
     if(isset($_POST['submit'])) {
 
 
-        $judulBuku = $_POST['judulBuku'];
-        $pengarangBuku = $_POST['pengarang'];
-        $penerbitBuku = $_POST['penerbit'];
-        $jumlahHalaman = $_POST['jumlahHalaman'];
-        $tahunTerbit = $_POST['tahunTerbit'];
-        $kategori = $_POST['id_kategori'];
+  
+        $judulBuku =   htmlspecialchars($_POST['judulBuku']);
+        $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
+        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
+        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
+        $kategori =  htmlspecialchars($_POST['id_kategori']); 
 
         $sql = "INSERT INTO buku (judul_buku,pengarang,	penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('".$judulBuku."','".$pengarangBuku."','".$penerbitBuku."','".$jumlahHalaman."','".$tahunTerbit."','".$kategori."')";
 

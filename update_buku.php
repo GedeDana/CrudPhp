@@ -98,12 +98,12 @@ $result=mysqli_fetch_array($data);
     if(isset($_POST['submit'])) {
 
 
-        $judulBuku = $_POST['judulBuku'];
-        $pengarangBuku = $_POST['pengarang'];
-        $penerbitBuku = $_POST['penerbit'];
-        $jumlahHalaman = $_POST['jumlahHalaman'];
-        $tahunTerbit = $_POST['tahunTerbit'];
-        $kategori = $_POST['id_kategori'];
+      
+        $judulBuku =   htmlspecialchars($_POST['judulBuku']);
+        $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
+        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
+        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
+        $kategori =  htmlspecialchars($_POST['id_kategori']); 
      
         $hasil = "UPDATE buku SET
         judul_buku= '$judulBuku', 

@@ -49,7 +49,7 @@
     require_once("config.php");
     if(isset($_POST['submit'])){
          
-        $kategori = $_POST['kategori'];
+        $kategori = htmlspecialchars($_POST['kategori']); 
         $sql = "INSERT INTO kategori_buku (nama_ketegori) VALUES ('".$kategori."')";
         $result = mysqli_query($conn,$sql);
         echo "<script>alert('Data Berhasil Ditambahkan')</script>";
