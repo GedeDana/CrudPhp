@@ -34,6 +34,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Id</th>
+                            <th>Kode Buku</th>
                             <th>Judul Buku</th>
                             <th>Pegarang</th>
                             <th>Penerbit</th>
@@ -53,25 +54,26 @@
 
                         $result = mysqli_query($conn, $sql);
                         $i = 1;
-
-                        while ($row = mysqli_fetch_array($result)) {
+                         while ($row = mysqli_fetch_array($result)) {
+                           
                             echo "<tr>";
                             echo "<th scope='row'>" . $i++ . "</th>";
+                            echo "<td>" . $row['kode_buku'] . "</td>";
                             echo "<td>" . $row['judul_buku'] . "</td>";
                             echo "<td>" . $row['pengarang'] . "</td>";
                             echo "<td>" . $row['penerbit'] . "</td>";
                             echo "<td>" . $row['jumlah_halaman'] . "</td>";
                             echo "<td>" . $row['tahun_terbit'] . "</td>";
-                            echo "<td>" . $row['nama_ketegori'] . "</td>";
+                            echo "<td>" . $row['nama_kategori'] . "</td>";
                             echo "<td>";
                             
                             echo " <div class='d-flex gap-3'>
-                                    <a href='?hapus=$row[id_buku]' onClick=\"return confirm('Apakah anda ingin menghapus data ?');\">
+                                    <a href='delete_buku.php?hapus=$row[kode_buku]' onClick=\"return confirm('Apakah anda ingin menghapus data ?');\">
                                         <button type='button' class='btn btn-danger'>
                                                 <i class='fa fa-trash-o' aria-hidden='true'></i>
                                         </button>
                                     </a>
-                                    <a href='update_buku.php?id=$row[id_buku]'>
+                                    <a href='update_buku.php?id=$row[kode_buku]'>
                                         <button type='button' class='btn btn-warning'>
                                             <i class='fa fa-pencil' aria-hidden='true'></i>
                                         </button>
@@ -82,87 +84,13 @@
                         }
 
                         ?>
-                        <!-- <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otasdsadasdasdto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>
-                                <div class="d-flex gap-3">
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-warning">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>
-                                <div class="d-flex gap-3">
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-warning">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry the Bird</td>
-                            <td>@twitter</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>
-                                <div class="d-flex gap-3">
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-warning">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     
-    <?php
-    if(isset($_GET['hapus'])) {
-        $idbuku = $_GET['hapus'];
-        $sql = "DELETE FROM buku WHERE id_buku='$idbuku'";
 
-        $result = mysqli_query($conn,$sql);
-
-        if($result) {
-            echo "<script>
-                    alert('Berhasil Menghapus Data Buku');
-                    location.href ='buku.php';
-            </script>";
-        }
-    }
-    
-
-            
-    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 

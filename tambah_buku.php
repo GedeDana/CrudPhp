@@ -28,6 +28,10 @@
                         <div class="card-body">
                             <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"];?>">
                                 <div class="form-group">
+                                    <label for="judulBuku">Kode Buku: </label>
+                                    <input type="text" class="form-control" placeholder="Judul Buku" name="kodeBuku" id=kodeBuku required>
+                                </div>
+                                <div class="form-group">
                                     <label for="judulBuku">Judul Buku: </label>
                                     <input type="text" class="form-control" placeholder="Judul Buku" name="judulBuku" id=judulBuku required>
                                 </div>
@@ -58,7 +62,7 @@
                                         $query = mysqli_query($conn, $sql);
                                        
                                         while ($data = mysqli_fetch_array($query)) {
-                                            echo "<option value=$data[id_kategori]> $data[nama_ketegori]  </option>";
+                                            echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
                                         }
 
                                         ?>
@@ -83,14 +87,15 @@
     if(isset($_POST['submit'])) {
 
 
-  
+        $kodeBuku = htmlspecialchars($_POST['kodeBuku']);
         $judulBuku =   htmlspecialchars($_POST['judulBuku']);
         $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
+        $penerbitBuku = htmlspecialchars($_POST['penerbit']);
         $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
         $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
         $kategori =  htmlspecialchars($_POST['id_kategori']); 
 
-        $sql = "INSERT INTO buku (judul_buku,pengarang,	penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('".$judulBuku."','".$pengarangBuku."','".$penerbitBuku."','".$jumlahHalaman."','".$tahunTerbit."','".$kategori."')";
+        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('".$kodeBuku."','".$judulBuku."','".$pengarangBuku."','".$penerbitBuku."','".$jumlahHalaman."','".$tahunTerbit."','".$kategori."')";
 
         $result = mysqli_query($conn,$sql);
         if($result){

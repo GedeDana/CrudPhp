@@ -3,8 +3,7 @@
 include_once "config.php";
 
 $id_buku = $_GET['id'];
-echo $id_buku;
-$sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND id_buku='$id_buku'";
+$sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND kode_buku='$id_buku'";
 
 $data=mysqli_query($conn,$sql);
 
@@ -64,13 +63,13 @@ $result=mysqli_fetch_array($data);
                                     <label for="kategoriBuku">Kategori Buku :</label>
                                     <select class="form-select" aria-label="Default select example" name="id_kategori"required>
                                         <?php
-                                         echo "<option value=$result[id_kategori]> $result[nama_ketegori]  </option>";
+                                         echo "<option value=$result[id_kategori]> $result[nama_kategori]  </option>";
 
                                         $sql = "SELECT * FROM kategori_buku";
                                         $query = mysqli_query($conn, $sql);
                                        
                                         while ($data = mysqli_fetch_array($query)) {
-                                            echo "<option value=$data[id_kategori]> $data[nama_ketegori]  </option>";
+                                            echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
                                         }
 
                                         ?>
@@ -97,21 +96,20 @@ $result=mysqli_fetch_array($data);
 <?php 
     if(isset($_POST['submit'])) {
 
-
-      
         $judulBuku =   htmlspecialchars($_POST['judulBuku']);
         $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
         $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
         $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
         $kategori =  htmlspecialchars($_POST['id_kategori']); 
-     
+        $penerbitBuku = htmlspecialchars($_POST['penerbit']);
+
         $hasil = "UPDATE buku SET
         judul_buku= '$judulBuku', 
         pengarang = '$pengarangBuku', 
         penerbit = '$penerbitBuku', 
         jumlah_halaman	 = '$jumlahHalaman',
         tahun_terbit = '$tahunTerbit',
-        id_kategori = '$kategori' WHERE id_buku='$id_buku'";
+        id_kategori = '$kategori' WHERE kode_buku='$id_buku'";
 
         $result = mysqli_query($conn,$hasil);
         if($result) {

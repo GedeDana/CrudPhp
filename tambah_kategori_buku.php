@@ -28,8 +28,8 @@
                         <div class="card-body">
                             <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"];?>">
                                 <div class="form-group">
-                                    <label for="judulBuku">Kategori Buku: </label>
-                                    <input type="text" class="form-control" placeholder="Judul Buku" name="kategori" id=judulBuku required>
+                                    <label for="kategori">Kategori Buku: </label>
+                                    <input type="text" class="form-control" placeholder="Kategori Buku" name="kategori" id=kategori required>
                                 </div>
                         
                                 <div class="form-group">
@@ -48,10 +48,12 @@
     <?php 
     require_once("config.php");
     if(isset($_POST['submit'])){
-         
+        
         $kategori = htmlspecialchars($_POST['kategori']); 
-        $sql = "INSERT INTO kategori_buku (nama_ketegori) VALUES ('".$kategori."')";
+        $sql = "INSERT INTO kategori_buku (nama_kategori) VALUES ('".$kategori."')";
+        
         $result = mysqli_query($conn,$sql);
+        echo $result;
         echo "<script>alert('Data Berhasil Ditambahkan')</script>";
     }
 
