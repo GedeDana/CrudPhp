@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <title>Perpustakaan</title>
 </head>
 
@@ -26,7 +26,7 @@
                             <h3 class="d-flex justify-content-center text-white">Judul Buku</h3>
                         </div>
                         <div class="card-body">
-                            <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"];?>">
+                            <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                                 <div class="form-group">
                                     <label for="judulBuku">Kode Buku: </label>
                                     <input type="text" class="form-control" placeholder="Judul Buku" name="kodeBuku" id=kodeBuku required>
@@ -60,14 +60,14 @@
                                         include "config.php";
                                         $sql = "SELECT * FROM kategori_buku";
                                         $query = mysqli_query($conn, $sql);
-                                       
+
                                         while ($data = mysqli_fetch_array($query)) {
                                             echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
                                         }
 
                                         ?>
                                     </select>
-                                </div> 
+                                </div>
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" class="btn btn-success col-md-3" name="submit">Submit</button>
@@ -81,24 +81,24 @@
             </div>
         </div>
     </div>
-    <?php 
-    
+    <?php
+
     require_once("config.php");
-    if(isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
 
 
         $kodeBuku = htmlspecialchars($_POST['kodeBuku']);
         $judulBuku =   htmlspecialchars($_POST['judulBuku']);
-        $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
+        $pengarangBuku = htmlspecialchars($_POST['pengarang']);
         $penerbitBuku = htmlspecialchars($_POST['penerbit']);
-        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
-        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
-        $kategori =  htmlspecialchars($_POST['id_kategori']); 
+        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']);
+        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']);
+        $kategori =  htmlspecialchars($_POST['id_kategori']);
 
-        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('".$kodeBuku."','".$judulBuku."','".$pengarangBuku."','".$penerbitBuku."','".$jumlahHalaman."','".$tahunTerbit."','".$kategori."')";
+        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "')";
 
-        $result = mysqli_query($conn,$sql);
-        if($result){
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
             echo "<script>
             alert('Data Berhasil Ditambahkan');
             location.href ='buku.php';
@@ -109,5 +109,6 @@
     ?>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="./bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
 </html>

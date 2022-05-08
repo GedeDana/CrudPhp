@@ -1,0 +1,5 @@
+Web ini masih tahap pengembangan
+
+untuk menajalankan web ini silakan jalankan Apache dan Mysql pada XAMPP
+Disarankan menggunakan mode Incognito, dan beberapa ada mengguakan konten cdn.
+disarankan menggunakan koneksi internet untuk mengakesnya beberapa asset
