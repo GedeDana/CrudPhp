@@ -23,7 +23,7 @@
                 <div class="col-md-6">
                     <div class="card rounded-0 shadow">
                         <div class="card-header bg-primary p-n1">
-                            <h3 class="d-flex justify-content-center text-white">Judul Buku</h3>
+                            <h3 class="d-flex justify-content-center text-white">Tambah Buku</h3>
                         </div>
                         <div class="card-body">
                             <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"]; ?>">

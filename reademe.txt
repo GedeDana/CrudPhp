@@ -1,5 +1,11 @@
 Web ini masih tahap pengembangan
 
+Web Sistem Perpustakaan berbasis web
+
+I Made Reza septiawan (190010056) Ketua
+I Gede Dana Suyoga     (190010064)
+I Kadek Adi Suryatama (190010053)
+
 untuk menajalankan web ini silakan jalankan Apache dan Mysql pada XAMPP
 Disarankan menggunakan mode Incognito, dan beberapa ada mengguakan konten cdn.
 disarankan menggunakan koneksi internet untuk mengakesnya beberapa asset
