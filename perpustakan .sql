@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 08, 2022 at 10:20 PM
+-- Generation Time: Jun 15, 2022 at 08:41 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -44,7 +44,8 @@ CREATE TABLE `buku` (
 --
 
 INSERT INTO `buku` (`kode_buku`, `judul_buku`, `pengarang`, `penerbit`, `jumlah_halaman`, `tahun_terbit`, `id_kategori`) VALUES
-('WB20345889', 'Karl Marx dan Utopia Sosialisme', 'Margeng Susono', 'PT Gramedia', 121, 2009, 3);
+('ge', 'ded', 'ase', 'aew', 1212, 2009, 4),
+('WB20345889', 'Karl Marx dan Utopia Sosialisme', 'Margeng Susono', 'PT Gramedia', 121, 2009, 2);
 
 -- --------------------------------------------------------
 
@@ -76,8 +77,7 @@ CREATE TABLE `user` (
   `id_user` varchar(100) NOT NULL,
   `nama_user` varchar(255) NOT NULL,
   `jabatan_user` varchar(255) NOT NULL,
-  `alamat_user` varchar(255) NOT NULL,
-  `umur` int(20) NOT NULL
+  `password_user` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
