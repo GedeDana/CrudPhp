@@ -68,6 +68,28 @@
                                         ?>
                                     </select>
                                 </div>
+                                <div class="form-group" hidden>
+                                    <label for="kategoriBuku">Status Buku :</label>
+                                    <select class="form-select" aria-label="Default select example" name="id_status" required hidden>
+                            
+                                        <?php
+
+                                        require_once "config.php";
+                                        $sql = "SELECT * FROM status_buku WHERE id_status = '1'";
+                                        $query = mysqli_query($conn, $sql);
+
+                                     
+                                        while ( $data = mysqli_fetch_array($query)) {
+                                        
+                                            echo "<option selected value=$data[id_status]> $data[status_buku]  </option>";
+                                            
+                                        }
+                                       
+                                        
+                        
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" class="btn btn-success col-md-3" name="submit">Submit</button>
@@ -94,8 +116,10 @@
         $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']);
         $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']);
         $kategori =  htmlspecialchars($_POST['id_kategori']);
+        $statusBuku = htmlspecialchars($_POST['id_status']);
+        
 
-        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "')";
+        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori, id_status) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "','". $statusBuku."')";
 
         $result = mysqli_query($conn, $sql);
         if ($result) {
