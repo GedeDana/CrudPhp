@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data anggota</title>
-    <link rel="stylesheet" href="../css/buku.css">
+    <link rel="stylesheet" href="../asset/css/buku.css">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
     <script src="https://use.fontawesome.com/7d6592d6d3.js"></script>
-    <link href="../bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                     <tbody>
                         <?php
 
-                        require_once "../config.php";
+                        require_once "../Controller/config.php";
 
                         $sql = "SELECT * FROM anggota_perpus";
                         
@@ -82,7 +82,7 @@
     </div>
     
 
-    <script src="../bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+    <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
 </body>
 
 </html>

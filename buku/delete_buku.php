@@ -12,8 +12,5 @@
                     location.href ='buku.php';
             </script>";
         }
-    }
-    
-
-            
+    }            
 ?>

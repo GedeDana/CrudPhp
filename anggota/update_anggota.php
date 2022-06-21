@@ -1,6 +1,6 @@
 <?php 
 
-require_once "../config.php";
+require_once "../Controller/config.php";
 
 $id_anggota = $_GET['id'];
 $sql = "SELECT * FROM anggota_perpus WHERE  id_anggota='$id_anggota'";
@@ -17,7 +17,8 @@ $result=mysqli_fetch_array($data);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link rel="stylesheet" href="../asset/css/buku.css">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
     <title>Data</title>
 </head>
 
@@ -71,7 +72,8 @@ $result=mysqli_fetch_array($data);
     
 </body>
 
-<script src="../bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
 </html>
 <?php 
     if(isset($_POST['submit'])) {

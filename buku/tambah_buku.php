@@ -1,11 +1,16 @@
+<?php 
+
+require_once "../Controller/config.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
     <title>Perpustakaan</title>
 </head>
 
@@ -57,7 +62,7 @@
                                         <option selected>Pilih kategori</option>
                                         <?php
 
-                                        include "config.php";
+                                
                                         $sql = "SELECT * FROM kategori_buku";
                                         $query = mysqli_query($conn, $sql);
 
@@ -71,22 +76,22 @@
                                 <div class="form-group" hidden>
                                     <label for="kategoriBuku">Status Buku :</label>
                                     <select class="form-select" aria-label="Default select example" name="id_status" required hidden>
-                            
+
                                         <?php
 
-                                        require_once "config.php";
+                                  
+
                                         $sql = "SELECT * FROM status_buku WHERE id_status = '1'";
                                         $query = mysqli_query($conn, $sql);
 
-                                     
-                                        while ( $data = mysqli_fetch_array($query)) {
-                                        
+
+                                        while ($data = mysqli_fetch_array($query)) {
+
                                             echo "<option selected value=$data[id_status]> $data[status_buku]  </option>";
-                                            
                                         }
-                                       
-                                        
-                        
+
+
+
                                         ?>
                                     </select>
                                 </div>
@@ -104,8 +109,8 @@
         </div>
     </div>
     <?php
+require_once "../Controller/config.php";
 
-    require_once("config.php");
     if (isset($_POST['submit'])) {
 
 
@@ -117,9 +122,9 @@
         $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']);
         $kategori =  htmlspecialchars($_POST['id_kategori']);
         $statusBuku = htmlspecialchars($_POST['id_status']);
-        
 
-        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori, id_status) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "','". $statusBuku."')";
+
+        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori, id_status) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "','" . $statusBuku . "')";
 
         $result = mysqli_query($conn, $sql);
         if ($result) {
@@ -133,6 +138,6 @@
     ?>
 </body>
 
-<script src="./bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 </html>

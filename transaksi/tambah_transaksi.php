@@ -1,6 +1,6 @@
 <?php 
 
-require '../config.php';
+require_once "../Controller/config.php";
 
 $sqlTampilkanAnggota = "SELECT * FROM anggota_perpus";
 $sqlTampilkanBuku = "SELECT * FROM buku WHERE id_status = '1'";
@@ -18,7 +18,7 @@ $kembali = date('d-m-Y', $empatbelas_hari);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
     <title>Data Transaksi</title>
 </head>
 
@@ -90,7 +90,6 @@ $kembali = date('d-m-Y', $empatbelas_hari);
     </div>
     <?php
 
-require_once("../config.php");
 if (isset($_POST['submit'])) {
 
 
@@ -117,6 +116,6 @@ if (isset($_POST['submit'])) {
 ?>
 </body>
 
-<script src="../bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
 
 </html> 

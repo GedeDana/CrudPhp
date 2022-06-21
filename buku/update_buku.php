@@ -1,13 +1,15 @@
 <?php 
 
-require_once "config.php";
+require_once "../Controller/config.php";
+
 
 $id_buku = $_GET['id'];
 $sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND kode_buku='$id_buku'";
 
 $data=mysqli_query($conn,$sql);
 
-$result=mysqli_fetch_array($data);
+$result=mysqli_fetch_array($data);     
+
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +19,8 @@ $result=mysqli_fetch_array($data);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+
     <title>Perpustakaan</title>
 </head>
 
@@ -65,9 +68,10 @@ $result=mysqli_fetch_array($data);
                                         <?php
                                          echo "<option value=$result[id_kategori]> $result[nama_kategori]  </option>";
 
+                                         
                                         $sql = "SELECT * FROM kategori_buku";
                                         $query = mysqli_query($conn, $sql);
-                                       
+                                        var_dump($data);
                                         while ($data = mysqli_fetch_array($query)) {
                                             echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
                                         }
@@ -91,7 +95,8 @@ $result=mysqli_fetch_array($data);
     
 </body>
 
-<script src="./bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
 </html>
 <?php 
     if(isset($_POST['submit'])) {

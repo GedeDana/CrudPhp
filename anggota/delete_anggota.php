@@ -1,5 +1,5 @@
 <?php
-    require_once "index.php";
+    require_once 'anggota.php';
     if(isset($_GET['hapus'])) {
         $id_anggota = $_GET['hapus'];
         $sql = "DELETE FROM anggota_perpus WHERE id_anggota='$id_anggota'";

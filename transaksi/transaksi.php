@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,7 @@
     <title>Data Transaksi</title>
     <link rel="stylesheet" href="../css/buku.css">
     <script src="https://use.fontawesome.com/7d6592d6d3.js"></script>
-    <link href="../bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
 </head>
 
 <body>
@@ -42,18 +43,18 @@
                     <tbody>
                         <?php
 
-                        require_once "../config.php";
+                        require_once "../Controller/config.php";
 
                         $sql = " SELECT * FROM transaksi_pinjam INNER JOIN buku
                         ON transaksi_pinjam.kode_buku = buku.kode_buku INNER JOIN anggota_perpus
                         ON transaksi_pinjam.id_anggota = anggota_perpus.id_anggota WHERE status ='pinjam'";
-                        
+
 
                         $result = mysqli_query($conn, $sql);
-            
+
                         $i = 1;
-                         while ($row = mysqli_fetch_array($result)) {
-                           
+                        while ($row = mysqli_fetch_array($result)) {
+
                             echo "<tr>";
                             echo "<th scope='row'>" . $i++ . "</th>";
                             echo "<td>" . $row['nama_anggota'] . "</td>";
@@ -63,14 +64,14 @@
                             echo "<td>" . $row['tanggal_kembali'] . "</td>";
                             echo "<td>" . $row['status'] . "</td>";
                             echo "<td>";
-                            
+
                             echo " <div class='d-flex gap-3'>
-                                    <a href='delete_anggota.php?hapus=$row[id_anggota]' onClick=\"return confirm('Apakah anda ingin menghapus data ?');\">
+                                    <a href='kembali_transaksi.php?aksi=kembali&id_transaksi=$row[id_transaksi]&kode_buku=$row[kode_buku]' onClick=\"return confirm('Apakah anda ingin megembalikan buku ?');\">
                                         <button type='button' class='btn btn-danger'>
                                                Telah Dikembalikan
                                         </button>
                                     </a>
-                                    <a href='update_anggota.php?id=$row[id_anggota]'>
+                                    <a href='update_anggota.php?id_anggota=$row[id_anggota]'>
                                         <button type='button' class='btn btn-warning'>
                                             Pepanjang
                                         </button>
@@ -85,9 +86,10 @@
             </div>
         </div>
     </div>
-    
 
-    <script src="../bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
+    <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+    
 </body>
 
 </html>
