@@ -1,15 +1,56 @@
 <?php 
 
 require_once "../Controller/config.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 
 $sqlTampilkanAnggota = "SELECT * FROM anggota_perpus";
 $sqlTampilkanBuku = "SELECT * FROM buku WHERE id_status = '1'";
 $tgl_pinjam = date('d-m-Y');
 $empatbelas_hari = mktime(0,0,0, date('n'), date('j') + 14, date('Y'));
-$kembali = date('d-m-Y', $empatbelas_hari);
+// $kembali = date('d-m-Y', $empatbelas_hari);
 
 
+if (isset($_POST['submit'])) {
 
+
+    $namaAnggota = htmlspecialchars($_POST['id_anggota']);
+    $bukuDipinjam =   htmlspecialchars($_POST['kode_buku']);
+    $tglPinjam = htmlspecialchars($_POST['tglPinjam']);
+    $tglKembali = htmlspecialchars($_POST['tglKembali']);
+    $tglKembaliConvert = date("d-m-Y", strtotime($tglKembali));
+    $status = "Pinjam";
+
+    $tgl1 = new DateTime($tglPinjam);
+    $tgl2 = new DateTime($tglKembaliConvert);
+    $jarak = $tgl2->diff($tgl1);
+    
+
+    if( ($jarak->days) > 30) {
+        echo "<script>
+            alert('Peminjaman Lebih dari 30 Hari');
+            location.href ='transaksi.php';
+            
+         </script>";
+         return $jarak->days;
+    } 
+    
+    $sqlInsertData = "INSERT INTO transaksi_pinjam (kode_buku,id_anggota, tanggal_pinjam, tanggal_kembali, status) VALUES ('$bukuDipinjam','$namaAnggota','$tglPinjam', '$tglKembaliConvert','$status')";
+    $sqlUpdateData = "UPDATE buku SET id_status = '2' WHERE kode_buku = '$bukuDipinjam'";
+    $result1 =  mysqli_query($conn, $sqlUpdateData);
+    $result = mysqli_query($conn, $sqlInsertData);
+
+
+    if (($result AND $result1) == true) {
+        echo "<script>
+            alert('Data Transaksi Peminjaman Behasil Ditambahkan');
+            location.href ='transaksi.php';
+        </script>";
+    }
+   
+ 
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +77,7 @@ $kembali = date('d-m-Y', $empatbelas_hari);
                 <div class="col-md-6">
                     <div class="card rounded-0 shadow">
                         <div class="card-header bg-primary p-n1">
-                            <h3 class="d-flex justify-content-center text-white">Tambah Anggota Perpustakaan</h3>
+                            <h3 class="d-flex justify-content-center text-white">Tambah Transaksi Peminjaman</h3>
                         </div>
                         <div class="card-body">
                             <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
@@ -73,7 +114,7 @@ $kembali = date('d-m-Y', $empatbelas_hari);
                                 </div>
                                 <div class="form-group">
                                     <label for="tglKembali">Tanggal Kembali </label>
-                                    <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nim Anggota" name="tglKembali" id="tglKembali" required value="<?= $kembali ?>" readonly>
+                                    <input type="date" class="form-control" aria-describedby="emailHelp" placeholder="Nim Anggota" name="tglKembali" id="tglKembali" required >
                                 </div>
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
@@ -90,29 +131,7 @@ $kembali = date('d-m-Y', $empatbelas_hari);
     </div>
     <?php
 
-if (isset($_POST['submit'])) {
 
-
-    $namaAnggota = htmlspecialchars($_POST['id_anggota']);
-    $bukuDipinjam =   htmlspecialchars($_POST['kode_buku']);
-    $tglPinjam = htmlspecialchars($_POST['tglPinjam']);
-    $tglKembali = htmlspecialchars($_POST['tglKembali']);
-    $status = "pinjam";
-
-
-    $sqlInsertData = "INSERT INTO transaksi_pinjam (kode_buku,id_anggota, tanggal_pinjam, tanggal_kembali, status) VALUES ('$bukuDipinjam','$namaAnggota','$tglPinjam','$tglKembali','$status')";
-    $sqlUpdateData = "UPDATE buku SET id_status = '2' WHERE kode_buku = '$bukuDipinjam'";
-    $result1 =  mysqli_query($conn, $sqlUpdateData);
-    $result = mysqli_query($conn, $sqlInsertData);
-    var_dump($result);
-
-    if (($result AND $result1) == true) {
-        echo "<script>
-            alert('Data Transaksi Peminjaman Behasil Ditambahkan');
-            location.href ='transaksi.php';
-        </script>";
-    }
-}
 ?>
 </body>
 
