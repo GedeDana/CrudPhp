@@ -1,65 +1,51 @@
-<?php 
-
-require_once "../Controller/config.php";
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
+require_once "../Controller/buku.php";
+require_once "../Controller/anggota.php";
+require_once "../Controller/transaksi.php";
+$buku = new buku();
+$anggota = new anggota();
+$transaksi = new transaksi();
 
-$sqlTampilkanAnggota = "SELECT * FROM anggota_perpus";
-$sqlTampilkanBuku = "SELECT * FROM buku WHERE id_status = '1'";
+$showAnggota = $anggota->show_data();
+$showBook = $buku->show_data_by_id(null);
+
 $tgl_pinjam = date('d-m-Y');
-$empatbelas_hari = mktime(0,0,0, date('n'), date('j') + 14, date('Y'));
-// $kembali = date('d-m-Y', $empatbelas_hari);
-
+$empatbelas_hari = mktime(0, 0, 0, date('n'), date('j') + 14, date('Y'));
 
 if (isset($_POST['submit'])) {
-
 
     $namaAnggota = htmlspecialchars($_POST['id_anggota']);
     $bukuDipinjam =   htmlspecialchars($_POST['kode_buku']);
     $tglPinjam = htmlspecialchars($_POST['tglPinjam']);
     $tglKembali = htmlspecialchars($_POST['tglKembali']);
-    $tglKembaliConvert = date("d-m-Y", strtotime($tglKembali));
-    $status = "Pinjam";
 
-    $tgl1 = new DateTime($tglPinjam);
-    $tgl2 = new DateTime($tglKembaliConvert);
-    $jarak = $tgl2->diff($tgl1);
-    
+    $result = $transaksi->add_transaction($bukuDipinjam, $namaAnggota, $tglPinjam, $tglKembali);
 
-    if( ($jarak->days) > 30) {
+    if ($result > 30) {
         echo "<script>
-            alert('Peminjaman Lebih dari 30 Hari');
-            location.href ='transaksi.php';
-            
-         </script>";
-         return $jarak->days;
-    } 
-    
-    $sqlInsertData = "INSERT INTO transaksi_pinjam (kode_buku,id_anggota, tanggal_pinjam, tanggal_kembali, status) VALUES ('$bukuDipinjam','$namaAnggota','$tglPinjam', '$tglKembaliConvert','$status')";
-    $sqlUpdateData = "UPDATE buku SET id_status = '2' WHERE kode_buku = '$bukuDipinjam'";
-    $result1 =  mysqli_query($conn, $sqlUpdateData);
-    $result = mysqli_query($conn, $sqlInsertData);
-
-
-    if (($result AND $result1) == true) {
+                alert('Peminjaman Lebih dari 30 Hari');
+                location.href ='transaksi.php';
+                
+            </script>";
+    } else {
         echo "<script>
             alert('Data Transaksi Peminjaman Behasil Ditambahkan');
             location.href ='transaksi.php';
         </script>";
     }
-   
- 
-
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <title>Data Transaksi</title>
 </head>
 
@@ -83,29 +69,27 @@ if (isset($_POST['submit'])) {
                             <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                                 <div class="form-group">
                                     <label for="namaAnggota">Nama anggota </label>
-                                    <select name="id_anggota" aria-label="Default select example"class="form-select" required>
-                                    <option selected>Pilih Anggota</option>
-                                    <?php 
-                                    
-                                    $query = mysqli_query($conn,$sqlTampilkanAnggota);
-                                    while($data = mysqli_fetch_array($query)) {
-                                        echo "<option value=$data[id_anggota]> $data[nama_anggota]  </option>";
-                                    }
-                                    ?>
+                                    <select name="id_anggota" aria-label="Default select example" class="form-select" required>
+                                        <option selected>Pilih Anggota</option>
+                                        <?php
+
+
+                                        foreach ($showAnggota as $showMembers) {
+                                            echo "<option value=$showMembers[id_anggota]> $showMembers[nama_anggota]  </option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                <label for="namaAnggota">Buku yang dipinjam </label>
-                                    <select name="kode_buku" aria-label="Default select example"class="form-select" required>
-                                    <option selected>Pilih Buku</option>
-                                    <?php 
-                                    
-                                    $query = mysqli_query($conn,$sqlTampilkanBuku);
+                                    <label for="namaAnggota">Buku yang dipinjam </label>
+                                    <select name="kode_buku" aria-label="Default select example" class="form-select" required>
+                                        <option selected>Pilih Buku</option>
+                                        <?php
 
-                                    while($data = mysqli_fetch_array($query)) {
-                                        echo "<option value=$data[kode_buku]> $data[kode_buku] -- $data[judul_buku]  </option>";
-                                    }
-                                    ?>
+                                        foreach ($showBook as $showBooks) {
+                                            echo "<option value=$showBooks[kode_buku]> $showBooks[kode_buku] -- $showBooks[judul_buku]   </option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -114,7 +98,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="tglKembali">Tanggal Kembali </label>
-                                    <input type="date" class="form-control" aria-describedby="emailHelp" placeholder="Nim Anggota" name="tglKembali" id="tglKembali" required >
+                                    <input type="date" class="form-control" aria-describedby="emailHelp" placeholder="Nim Anggota" name="tglKembali" id="tglKembali" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
@@ -132,9 +116,9 @@ if (isset($_POST['submit'])) {
     <?php
 
 
-?>
+    ?>
 </body>
 
-<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-</html> 
+</html>

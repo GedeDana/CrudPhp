@@ -1,16 +1,32 @@
 <?php 
-
-require_once "../Controller/config.php";
-
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once "../Controller/buku.php";
+$buku = new buku();
 
 $id_buku = $_GET['id'];
-$sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND kode_buku='$id_buku'";
+$result = $buku->show_data_by_id($id_buku);
+$resultCategory = $buku->show_data_by_category();
 
-$data=mysqli_query($conn,$sql);
+if(isset($_POST['submit'])) {
 
-$result=mysqli_fetch_array($data);     
+    $judulBuku =   htmlspecialchars($_POST['judulBuku']);
+    $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
+    $penerbitBuku = htmlspecialchars($_POST['penerbit']);
+    $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
+    $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
+    $kategori =  htmlspecialchars($_POST['id_kategori']); 
+  
 
-
+    $updateData = $buku->change_data($judulBuku,$pengarangBuku,$penerbitBuku,$jumlahHalaman,$tahunTerbit, $kategori,$id_buku);
+    if($updateData) {
+        echo "<script>
+            alert('Berhasil mengubah data buku');
+            location.href ='buku.php';
+            </script>";
+        
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,16 +82,11 @@ $result=mysqli_fetch_array($data);
                                     <label for="kategoriBuku">Kategori Buku :</label>
                                     <select class="form-select" aria-label="Default select example" name="id_kategori"required>
                                         <?php
-                                         echo "<option value=$result[id_kategori]> $result[nama_kategori]  </option>";
-
-                                         
-                                        $sql = "SELECT * FROM kategori_buku";
-                                        $query = mysqli_query($conn, $sql);
-                                        var_dump($data);
-                                        while ($data = mysqli_fetch_array($query)) {
-                                            echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
+                                        
+                                        foreach($resultCategory as $category) {
+                                            echo "<option value=$category[id_kategori]> $category[nama_kategori]  </option>";
                                         }
-
+                               
                                         ?>
                                     </select>
                                 </div> 
@@ -98,31 +109,3 @@ $result=mysqli_fetch_array($data);
 <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
 
 </html>
-<?php 
-    if(isset($_POST['submit'])) {
-
-        $judulBuku =   htmlspecialchars($_POST['judulBuku']);
-        $pengarangBuku = htmlspecialchars($_POST['pengarang']); 
-        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']); 
-        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']); 
-        $kategori =  htmlspecialchars($_POST['id_kategori']); 
-        $penerbitBuku = htmlspecialchars($_POST['penerbit']);
-
-        $hasil = "UPDATE buku SET
-        judul_buku= '$judulBuku', 
-        pengarang = '$pengarangBuku', 
-        penerbit = '$penerbitBuku', 
-        jumlah_halaman	 = '$jumlahHalaman',
-        tahun_terbit = '$tahunTerbit',
-        id_kategori = '$kategori' WHERE kode_buku='$id_buku'";
-
-        $result = mysqli_query($conn,$hasil);
-        if($result) {
-            echo "<script>
-                alert('Berhasil mengubah data buku');
-                location.href ='buku.php';
-                </script>";
-            
-        }
-    }
-    ?>

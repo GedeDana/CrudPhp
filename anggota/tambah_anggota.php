@@ -1,6 +1,28 @@
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once '../Controller/anggota.php';
+
+if (isset($_POST['submit'])) {
+
+        $anggota = new anggota();
+
+        $namaAnggota = htmlspecialchars($_POST['namaAnggota']);
+        $jurusanAnggota =   htmlspecialchars($_POST['jurusanAnggota']);
+        $angkatanAnggota = htmlspecialchars($_POST['angkatanAnggota']);
+        $nimAnggota = htmlspecialchars($_POST['nimAnggota']);
+        $data = $anggota->add_data($namaAnggota,$jurusanAnggota,$angkatanAnggota,$nimAnggota);  
+    
+        if ($data) {
+            echo "<script>
+                alert('Data Anggota Behasil Ditambahkan');
+                location.href ='anggota.php';
+            </script>";
+        }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +30,6 @@
     <link href="../asset/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
     <title>Perpustakaan</title>
 </head>
-
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-danger ">
@@ -46,7 +67,7 @@
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" class="btn btn-success col-md-3" name="submit">Submit</button>
-                                        <button type="submit" class="btn btn-danger col-md-3"><a href="./index.php" style="text-decoration: none !important; color: white;">Keluar</a></button>
+                                        <button type="submit" class="btn btn-danger col-md-3"><a href="anggota.php" style="text-decoration: none !important; color: white;">Keluar</a></button>
                                     </div>
                                 </div>
                             </form>
@@ -56,33 +77,7 @@
             </div>
         </div>
     </div>
-    <?php
-
-    require_once("../Controller/config.php");
-    if (isset($_POST['submit'])) {
-
-
-        $namaAnggota = htmlspecialchars($_POST['namaAnggota']);
-        $jurusanAnggota =   htmlspecialchars($_POST['jurusanAnggota']);
-        $angkatanAnggota = htmlspecialchars($_POST['angkatanAnggota']);
-        $nimAnggota = htmlspecialchars($_POST['nimAnggota']);
-
-
-        $sql = "INSERT INTO anggota_perpus (nama_anggota,jurusan_anggota,angkatan_anggota, nim_anggota) VALUES ('". $namaAnggota . "','" . $jurusanAnggota . "','" . $angkatanAnggota . "','" . $nimAnggota . "')";
-  
-        $result = mysqli_query($conn, $sql);
-    
-        if ($result) {
-            echo "<script>
-                alert('Data Anggota Behasil Ditambahkan');
-                location.href ='anggota.php';
-            </script>";
-        }
-    }
-    ?>
 </body>
 
 <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
-
-
 </html> 

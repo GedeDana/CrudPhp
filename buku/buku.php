@@ -1,6 +1,13 @@
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once '../Controller/buku.php';
+
+$buku = new buku();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,17 +53,14 @@
                     <tbody>
                         <?php
 
-                        require_once "../Controller/config.php";
-
-                        $sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND id_status ='1'";
-                        
-
-                        $result = mysqli_query($conn, $sql);
-                        $i = 1;
-                         while ($row = mysqli_fetch_array($result)) {
+                        $data = $buku->show_data();
+                                                
+                        $numberLoop = 1;
+                            
+                         foreach ($data as $row) {
                            
                             echo "<tr>";
-                            echo "<th scope='row'>" . $i++ . "</th>";
+                            echo "<th scope='row'>" . $numberLoop++ . "</th>";
                             echo "<td>" . $row['kode_buku'] . "</td>";
                             echo "<td>" . $row['judul_buku'] . "</td>";
                             echo "<td>" . $row['pengarang'] . "</td>";

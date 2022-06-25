@@ -1,6 +1,13 @@
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once '../Controller/anggota.php';
+
+$anggota = new anggota();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +19,6 @@
 </head>
 
 <body>
-
     <header>
         <nav class="navbar navbar-expand-lg bg-danger ">
             <div class="container-fluid d-flex justify-content-center">
@@ -41,18 +47,13 @@
                     <tbody>
                         <?php
 
-                        require_once "../Controller/config.php";
-
-                        $sql = "SELECT * FROM anggota_perpus";
-                        
-
-                        $result = mysqli_query($conn, $sql);
-            
-                        $i = 1;
-                         while ($row = mysqli_fetch_array($result)) {
-                           
+                         $data = $anggota->show_data();
+                         
+                         $numberLoop = 1;
+                         foreach($data as $row) {
+                          
                             echo "<tr>";
-                            echo "<th scope='row'>" . $i++ . "</th>";
+                            echo "<th scope='row'>" .  $numberLoop++ . "</th>";
                             echo "<td>" . $row['nama_anggota'] . "</td>";
                             echo "<td>" . $row['jurusan_anggota'] . "</td>";
                             echo "<td>" . $row['angkatan_anggota'] . "</td>";
@@ -73,7 +74,7 @@
                                 </div>";
                             echo "</td>";
                             echo "</tr>";
-                        }
+                         }
                         ?>
                     </tbody>
                 </table>

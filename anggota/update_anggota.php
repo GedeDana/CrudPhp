@@ -1,18 +1,32 @@
 <?php 
-
-require_once "../Controller/config.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once '../Controller/anggota.php';
 
 $id_anggota = $_GET['id'];
-$sql = "SELECT * FROM anggota_perpus WHERE  id_anggota='$id_anggota'";
+$anggota = new anggota();
 
-$data=mysqli_query($conn,$sql);
+$result = $anggota->show_data_by_id($id_anggota);
 
-$result=mysqli_fetch_array($data);
+if(isset($_POST['submit'])) {
 
+    $namaAnggota = htmlspecialchars($_POST['namaAnggota']);
+    $jurusanAnggota =   htmlspecialchars($_POST['jurusanAnggota']);
+    $angkatanAnggota = htmlspecialchars($_POST['angkatanAnggota']);
+    $nimAnggota = htmlspecialchars($_POST['nimAnggota']);
+    
+    $result = $anggota->change_data($namaAnggota, $jurusanAnggota,$angkatanAnggota,$nimAnggota,$id_anggota);
+    if($result) {
+        echo "<script>
+                alert('Berhasil mengubah data anggota');
+                location.href ='anggota.php';
+            </script>";
+        
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,7 +73,7 @@ $result=mysqli_fetch_array($data);
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" class="btn btn-success col-md-3" name="submit">Submit</button>
-                                        <button type="submit" class="btn btn-danger col-md-3"><a href="./index.php" style="text-decoration: none !important; color: white;">Keluar</a></button>
+                                        <button type="submit" class="btn btn-danger col-md-3"><a href="anggota.php" style="text-decoration: none !important; color: white;">Keluar</a></button>
                                     </div>
                                 </div>
                             </form>
@@ -68,34 +82,9 @@ $result=mysqli_fetch_array($data);
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div> 
 </body>
 
 <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
 
 </html>
-<?php 
-    if(isset($_POST['submit'])) {
-
-        $namaAnggota = htmlspecialchars($_POST['namaAnggota']);
-        $jurusanAnggota =   htmlspecialchars($_POST['jurusanAnggota']);
-        $angkatanAnggota = htmlspecialchars($_POST['angkatanAnggota']);
-        $nimAnggota = htmlspecialchars($_POST['nimAnggota']);
-
-        $hasil = "UPDATE anggota_perpus SET
-        nama_anggota = '$namaAnggota', 
-        jurusan_anggota = ' $jurusanAnggota', 
-        angkatan_anggota = '$angkatanAnggota', 
-        nim_anggota	 = '$nimAnggota' WHERE id_anggota='$id_anggota'";
-
-        $result = mysqli_query($conn,$hasil);
-        if($result) {
-            echo "<script>
-                    alert('Berhasil mengubah data anggota');
-                    location.href ='anggota.php';
-                </script>";
-            
-        }
-    }
-    ?>

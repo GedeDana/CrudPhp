@@ -1,6 +1,30 @@
 <?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+require_once "../Controller/buku.php";
+$buku = new buku();
+$resultCategory = $buku->show_data_by_category();
+if (isset($_POST['submit'])) {
 
-require_once "../Controller/config.php";
+ 
+
+    $kodeBuku = htmlspecialchars($_POST['kodeBuku']);
+    $judulBuku =   htmlspecialchars($_POST['judulBuku']);
+    $pengarangBuku = htmlspecialchars($_POST['pengarang']);
+    $penerbitBuku = htmlspecialchars($_POST['penerbit']);
+    $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']);
+    $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']);
+    $kategori =  htmlspecialchars($_POST['id_kategori']);
+
+    $data = $buku->add_data($kodeBuku,$judulBuku,$pengarangBuku,$penerbitBuku,$jumlahHalaman,$tahunTerbit,$kategori);  
+
+    if ($data) {
+        echo "<script>
+            alert('Data Buku Behasil Ditambahkan');
+            location.href ='buku.php';
+        </script>";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -62,12 +86,8 @@ require_once "../Controller/config.php";
                                         <option selected>Pilih kategori</option>
                                         <?php
 
-                                
-                                        $sql = "SELECT * FROM kategori_buku";
-                                        $query = mysqli_query($conn, $sql);
-
-                                        while ($data = mysqli_fetch_array($query)) {
-                                            echo "<option value=$data[id_kategori]> $data[nama_kategori]  </option>";
+                                        foreach($resultCategory as $category) {
+                                            echo "<option value=$category[id_kategori]> $category[nama_kategori]  </option>";
                                         }
 
                                         ?>
@@ -76,20 +96,11 @@ require_once "../Controller/config.php";
                                 <div class="form-group" hidden>
                                     <label for="kategoriBuku">Status Buku :</label>
                                     <select class="form-select" aria-label="Default select example" name="id_status" required hidden>
-
                                         <?php
 
-                                  
-
-                                        $sql = "SELECT * FROM status_buku WHERE id_status = '1'";
-                                        $query = mysqli_query($conn, $sql);
-
-
-                                        while ($data = mysqli_fetch_array($query)) {
-
-                                            echo "<option selected value=$data[id_status]> $data[status_buku]  </option>";
+                                        foreach($resultCategory as $category) {
+                                            echo "<option value=$category[id_kategori]> $category[nama_kategori]  </option>";
                                         }
-
 
 
                                         ?>
@@ -108,34 +119,6 @@ require_once "../Controller/config.php";
             </div>
         </div>
     </div>
-    <?php
-require_once "../Controller/config.php";
-
-    if (isset($_POST['submit'])) {
-
-
-        $kodeBuku = htmlspecialchars($_POST['kodeBuku']);
-        $judulBuku =   htmlspecialchars($_POST['judulBuku']);
-        $pengarangBuku = htmlspecialchars($_POST['pengarang']);
-        $penerbitBuku = htmlspecialchars($_POST['penerbit']);
-        $jumlahHalaman = htmlspecialchars($_POST['jumlahHalaman']);
-        $tahunTerbit = htmlspecialchars($_POST['tahunTerbit']);
-        $kategori =  htmlspecialchars($_POST['id_kategori']);
-        $statusBuku = htmlspecialchars($_POST['id_status']);
-
-
-        $sql = "INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit, jumlah_halaman, tahun_terbit, id_kategori, id_status) VALUES ('" . $kodeBuku . "','" . $judulBuku . "','" . $pengarangBuku . "','" . $penerbitBuku . "','" . $jumlahHalaman . "','" . $tahunTerbit . "','" . $kategori . "','" . $statusBuku . "')";
-
-        $result = mysqli_query($conn, $sql);
-        if ($result) {
-            echo "<script>
-            alert('Data Berhasil Ditambahkan');
-            location.href ='buku.php';
-            
-            </script>";
-        }
-    }
-    ?>
 </body>
 
 <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js" crossorigin="anonymous"></script>

@@ -1,10 +1,14 @@
 <?php 
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
+
+require_once '../Controller/transaksi.php';
+
+$transaksi = new transaksi();
+$transaksiData = $transaksi->show_data();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,39 +53,21 @@ ini_set('display_errors', 'on');
                     </thead>
                     <tbody>
                         <?php
+;           
+                        $numberLoop = 1;
+                        foreach ($transaksiData as $transaksiValue) {
 
-                        require_once "../Controller/config.php";
+                            $denda = $transaksi->late_fine($transaksiValue['tanggal_kembali']);
 
-                        $sql = " SELECT * FROM transaksi_pinjam INNER JOIN buku
-                        ON transaksi_pinjam.kode_buku = buku.kode_buku INNER JOIN anggota_perpus
-                        ON transaksi_pinjam.id_anggota = anggota_perpus.id_anggota WHERE status ='pinjam'";
-
-                        $result = mysqli_query($conn, $sql);
-
-                        $i = 1;
-                        while ($row = mysqli_fetch_assoc($result)) {
-
-                            $t = date_create($row['tanggal_kembali']);
-                            $n = date_create(date('d-m-Y'));
-                            $terlambat = date_diff($t, $n);
-                            $hari = $terlambat->format("%R%a");
-                            
-                            if ($hari > 0) {
-                                $denda = $hari * 5000;
-                            }
-                            else {
-                                $denda = 0;
-                                $hari = 0;
-                            }
-
+                           [$hari, $denda ] = $denda;
                             echo "<tr>";
-                            echo "<th scope='row'>" . $i++ . "</th>";
-                            echo "<td>" . $row['nama_anggota'] . "</td>";
-                            echo "<td>" . $row['nim_anggota'] . "</td>";
-                            echo "<td>" . $row['judul_buku'] . "</td>";
-                            echo "<td>" . $row['tanggal_pinjam'] . "</td>";
-                            echo "<td>" . $row['tanggal_kembali'] . "</td>";
-                            echo "<td>" . $row['status'] . "</td>";
+                            echo "<th scope='row'>" . $numberLoop++ . "</th>";
+                            echo "<td>" . $transaksiValue['nama_anggota'] . "</td>";
+                            echo "<td>" . $transaksiValue['nim_anggota'] . "</td>";
+                            echo "<td>" . $transaksiValue['judul_buku'] . "</td>";
+                            echo "<td>" . $transaksiValue['tanggal_pinjam'] . "</td>";
+                            echo "<td>" . $transaksiValue['tanggal_kembali'] . "</td>";
+                            echo "<td>" . $transaksiValue['status'] . "</td>";
                             echo "<td>" . "Rp ".$denda . "</td>";
                             echo "<td>" . str_replace('+', '', $hari). " Hari". "</td>";
                             
@@ -89,12 +75,12 @@ ini_set('display_errors', 'on');
                             echo "<td>";
 
                             echo " <div class='d-flex gap-3'>
-                                    <a href='kembali_transaksi.php?aksi=kembali&id_transaksi=$row[id_transaksi]&kode_buku=$row[kode_buku]' onClick=\"return confirm('Apakah anda ingin megembalikan buku ?');\">
+                                    <a href='kembali_transaksi.php?aksi=kembali&id_transaksi=$transaksiValue[id_transaksi]&kode_buku=$transaksiValue[kode_buku]' onClick=\"return confirm('Apakah anda ingin megembalikan buku ?');\">
                                         <button type='button' class='btn btn-danger'>
                                                Dikembalikan
                                         </button>
                                     </a>
-                                    <a href=perpanjang_transaksi.php?aksi=perpanjang&lambat=$hari&id_transaksi=$row[id_transaksi]&tgl_kembali=$row[tanggal_kembali]'>
+                                    <a href=perpanjang_transaksi.php?aksi=perpanjang&lambat=$hari&id_transaksi=$transaksiValue[id_transaksi]&tgl_kembali=$transaksiValue[tanggal_kembali]'>
                                         <button type='button' class='btn btn-warning'>
                                             Pepanjang
                                         </button>
