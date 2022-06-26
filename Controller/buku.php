@@ -37,7 +37,10 @@ class buku extends database {
         if($id_buku != NULL) {
             $sql = "SELECT * FROM buku, kategori_buku WHERE buku.id_kategori = kategori_buku.id_kategori AND kode_buku='$id_buku'";
             $result = mysqli_query(parent::__construct(), $sql);
-            $data = $result;
+            $data = mysqli_fetch_assoc($result);
+           
+
+            return $data;
         } else {
             $sql = "SELECT * FROM buku WHERE id_status = 1";
             $result = mysqli_query(parent::__construct(), $sql);
