@@ -1,3 +1,24 @@
+<?php
+    require_once "../Controller/buku.php";
+    $book = new buku();
+    if (isset($_POST['submit'])) {
+
+        $kategori = htmlspecialchars($_POST['kategori']);
+        $insertCategory = $book->insert_data_category_book($kategori);
+
+
+        if($insertCategory) {
+            echo "<script>
+            alert('Berhasil menambah kategori buku');
+            location.href ='buku.php';
+            </script>";
+        } else {
+            echo "<script>alert('Data Gagal Ditambahkan')</script>";
+        }
+        
+    }
+
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +47,7 @@
                             <h3 class="d-flex justify-content-center text-white">Tambah Kategori Buku</h3>
                         </div>
                         <div class="card-body">
-                            <form method="post" class="d-grid gap-3" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                            <form method="post" class="d-grid gap-3" action="">
                                 <div class="form-group">
                                     <label for="kategori">Kategori Buku: </label>
                                     <input type="text" class="form-control" placeholder="Kategori Buku" name="kategori" id=kategori required>
@@ -45,20 +66,6 @@
             </div>
         </div>
     </div>
-    <?php
-    require_once "../Controller/config.php";
-
-    if (isset($_POST['submit'])) {
-
-        $kategori = htmlspecialchars($_POST['kategori']);
-        $sql = "INSERT INTO kategori_buku (nama_kategori) VALUES ('" . $kategori . "')";
-
-        $result = mysqli_query($conn, $sql);
-        echo $result;
-        echo "<script>alert('Data Berhasil Ditambahkan')</script>";
-    }
-
-    ?>
 </body>
 <script src="../asset/bootstrap-5.0.2-dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 

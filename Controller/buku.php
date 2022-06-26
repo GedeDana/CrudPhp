@@ -22,6 +22,14 @@ class buku extends database {
         }
 
         return $data;
+        
+    }
+    function insert_data_category_book($kategori) {
+        $sql =  "INSERT INTO kategori_buku (nama_kategori) VALUES ('$kategori')";
+        $result = mysqli_query(parent::__construct(), $sql);
+
+        return $result;
+       
     }
 
     function show_data_by_id(?string $id_buku) {
