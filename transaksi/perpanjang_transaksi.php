@@ -3,6 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 require_once '../Controller/transaksi.php';
 
+session_start();
+
+if( !isset($_SESSION["login"])) {
+    header("location: login.php");
+    exit;
+}
 $transaksi = new transaksi();
 if(isset($_GET['aksi'])){
     $id_transaksi = $_GET['id_transaksi'];

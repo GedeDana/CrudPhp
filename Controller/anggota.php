@@ -37,6 +37,7 @@ class anggota extends database {
         return $result;
     }
 
+
     function delete_data($id_anggota) {
         $sql = "DELETE FROM anggota_perpus WHERE id_anggota='$id_anggota'";
 
@@ -44,6 +45,16 @@ class anggota extends database {
 
         return $result;
     }
+
+    function show_count() {
+        $sql = "SELECT COUNT(*) as total FROM anggota_perpus";
+        $result = mysqli_query(parent::__construct(),$sql);
+        $rows = mysqli_fetch_assoc($result);
+        return $rows['total'];
+
+    }
+
+
 
 }
 

@@ -100,5 +100,12 @@ class transaksi extends database
         }
     }
 
+    function show_count() {
+        $sql = "SELECT COUNT(*) as total FROM transaksi_pinjam";
+        $result = mysqli_query(parent::__construct(),$sql);
+        $rows = mysqli_fetch_assoc($result);
+        return $rows['total'];
+
+    }
    
 }

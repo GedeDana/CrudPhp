@@ -95,6 +95,14 @@ class buku extends database {
         return $result;
     }
 
+    function show_count() {
+        $sql = "SELECT COUNT(*) as total FROM buku";
+        $result = mysqli_query(parent::__construct(),$sql);
+        $rows = mysqli_fetch_assoc($result);
+        return $rows['total'];
+
+    }
+
 }
 
 ?>
