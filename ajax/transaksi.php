@@ -1,12 +1,9 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
 require '../Controller/transaksi.php';
 
 $keyword = $_GET["keyword"];
 $transaksi = new transaksi();
 $data = $transaksi->search_data($keyword);
-
 
 ?>
 
@@ -40,7 +37,6 @@ $data = $transaksi->search_data($keyword);
                 foreach ($data as $transaksiValue) {
 
                     $denda = $transaksi->late_fine($transaksiValue['tanggal_kembali']);
-                   
                     [$hari, $denda] = $denda;
                     echo "<tr>";
                     echo "<th scope='row'>" . $numberLoop++ . "</th>";
