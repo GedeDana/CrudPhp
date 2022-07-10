@@ -1,18 +1,17 @@
 <?php
-    require_once 'anggota.php';
+    require_once '../Controller/anggota.php';
     if(isset($_GET['hapus'])) {
         $id_anggota = $_GET['hapus'];
-        $sql = "DELETE FROM anggota_perpus WHERE id_anggota='$id_anggota'";
+        $anggota = new anggota();
 
-        $result = mysqli_query($conn,$sql);
-
+        $result = $anggota->delete_data($id_anggota);
         if($result) {
             echo "<script>
                     alert('Berhasil Menghapus Data Anggota Buku');
                     location.href ='anggota.php';
             </script>";
         }
-    }
+}
     
 
             

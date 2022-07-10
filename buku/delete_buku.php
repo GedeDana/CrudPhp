@@ -1,10 +1,19 @@
 <?php
-    require_once "buku.php";
+    require_once "../Controller/buku.php";
+
+
+    session_start();
+
+    if( !isset($_SESSION["login"])) {
+        header("location: login.php");
+        exit;
+    }
+
     if(isset($_GET['hapus'])) {
         $idbuku = $_GET['hapus'];
-        $sql = "DELETE FROM buku WHERE kode_buku='$idbuku'";
+        $buku = new buku();
 
-        $result = mysqli_query($conn,$sql);
+        $result = $buku->delete_data($idbuku);
 
         if($result) {
             echo "<script>
