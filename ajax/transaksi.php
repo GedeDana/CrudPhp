@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require '../Controller/transaksi.php';
 
 $keyword = $_GET["keyword"];
@@ -32,7 +33,7 @@ $data = $transaksi->search_data($keyword);
         </thead>
         <tbody>
             <?php
-            if ($data != null) {
+            if ($data != null || !empty($data)) {
                 $numberLoop = 1;
                 foreach ($data as $transaksiValue) {
 
