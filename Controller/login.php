@@ -43,11 +43,4 @@ class login extends database {
     }
 
 
-    function cookies($data) 
-    {
-        
-    }
-
 }
-
-?>
