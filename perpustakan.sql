@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2022 at 09:07 PM
+-- Generation Time: Jul 10, 2022 at 11:48 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -42,8 +42,9 @@ CREATE TABLE `anggota_perpus` (
 --
 
 INSERT INTO `anggota_perpus` (`id_anggota`, `nama_anggota`, `jurusan_anggota`, `angkatan_anggota`, `nim_anggota`) VALUES
-(1, 'I Gede Dana Suyoga', '    Sistem Informasi', '2019', 190010060),
-(21, 'I Kadek Adi Suryatama', ' SIstem Komputer', '2019', 190010056);
+(1, 'I Gede Dana Suyoga', '  Sistem Informasi', '2019', 190010060),
+(21, 'I Kadek Adi Suryatama', ' SIstem Komputer', '2019', 190010056),
+(23, 'I Made Reza Septiawan', 'SIstem Komputer', '2019', 190010054);
 
 -- --------------------------------------------------------
 
@@ -67,12 +68,12 @@ CREATE TABLE `buku` (
 --
 
 INSERT INTO `buku` (`kode_buku`, `judul_buku`, `pengarang`, `penerbit`, `jumlah_halaman`, `tahun_terbit`, `id_kategori`, `id_status`) VALUES
-('AN89017228920', 'Suikoden 4', 'Margeng Susono', 'PT Gramedia', 640, 2009, 2, 1),
-('TI98763456', '7 IN 1 Pemograman Web Untuk Pemula', 'Roni Abdulloh', 'PT Gramedia', 209, 2018, 2, 1),
+('AN89017228920', 'Suikoden 1', 'Gde', 'indo', 1, 1998, 12, 1),
+('TI98763456', '7 IN 1 Pemograman Web Untuk Pemula', 'Roni Abdulloh', 'PT Gramedia', 208, 2018, 2, 1),
 ('TI98763457', '7 IN 1 Pemograman Web Untuk Pemula', 'Roni Abdulloh', 'PT Gramedia', 304, 2018, 2, 2),
 ('TI98763458', '7 IN 1 Pemograman Web Untuk Pemula', 'Pakde', 'PT Gramedia', 304, 2018, 2, 1),
-('WB20345889', 'Karl Marx dan Utopia Sosialisme', 'Margeng Susono', 'PT Gramedia', 1222, 1998, 4, 1),
-('WB20345890', 'Suikoden 2', 'Margeng Susono', 'PT Gramedia', 640, 2009, 5, 1);
+('WB20345889', 'Karl Marx dan Utopia Sosialisme', 'Margeng Susono', 'PT Gramedia', 1222, 1997, 2, 1),
+('WB20345890', 'Suikoden 2', 'Margeng Susono', 'PT Gramedia', 640, 2009, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -93,7 +94,11 @@ INSERT INTO `kategori_buku` (`id_kategori`, `nama_kategori`) VALUES
 (2, 'Website'),
 (3, 'Sejarah'),
 (4, 'Filsafat'),
-(5, 'Anime');
+(5, 'Anime'),
+(6, 'Cerpen'),
+(12, 'Film'),
+(17, 'Agama'),
+(18, 'agas');
 
 -- --------------------------------------------------------
 
@@ -137,7 +142,9 @@ INSERT INTO `transaksi_pinjam` (`id_transaksi`, `kode_buku`, `id_anggota`, `tang
 (71, 'AN89017228920', 1, '25-06-2022', '08-08-2022', 'Kembali'),
 (73, 'TI98763456', 1, '20-06-2022', '21-06-2022', 'Kembali'),
 (74, 'AN89017228920', 1, '15-06-2022', '20-06-2022', 'Kembali'),
-(75, 'TI98763457', 1, '26-06-2022', '05-07-2022', 'Pinjam');
+(75, 'TI98763457', 1, '26-06-2022', '12-07-2022', 'Pinjam'),
+(76, 'WB20345890', 21, '27-06-2022', '11-06-2022', 'Pinjam'),
+(77, 'AN89017228920', 1, '07-07-2022', '15-07-2022', 'Kembali');
 
 -- --------------------------------------------------------
 
@@ -146,11 +153,21 @@ INSERT INTO `transaksi_pinjam` (`id_transaksi`, `kode_buku`, `id_anggota`, `tang
 --
 
 CREATE TABLE `user` (
-  `id_user` varchar(100) NOT NULL,
-  `nama_user` varchar(255) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `jabatan_user` varchar(255) NOT NULL,
-  `password_user` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `jabatan_user`, `password`) VALUES
+(1, 'pakde', 'admin', '$2y$10$vyvkARhq.Z2PVy6D95LAWuE.jfL6dUlhZnY7woZ73ohAAX7.sebH.'),
+(2, 'gede', 'admin', '$2y$10$gD/PbVa935yCqAW98m7uH.trqL0HP2JPhFrebOAPcOd5wxfUtG/hC'),
+(8, 'pakgede', '12', '$2y$10$8IHGXs1JzaxdV2Ug7UYKDO6uFK4J10YXHHW8QJFlwYBHnd15nPDIK'),
+(9, 'harun', 'inventaris', '$2y$10$j1cRIlgsGXqRVfFbKYQ.y.5lHTdbpu2YwmLkmaKQrX8TojPq9BPK6');
 
 --
 -- Indexes for dumped tables
@@ -204,13 +221,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `anggota_perpus`
 --
 ALTER TABLE `anggota_perpus`
-  MODIFY `id_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `kategori_buku`
 --
 ALTER TABLE `kategori_buku`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `status_buku`
@@ -222,7 +239,13 @@ ALTER TABLE `status_buku`
 -- AUTO_INCREMENT for table `transaksi_pinjam`
 --
 ALTER TABLE `transaksi_pinjam`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
