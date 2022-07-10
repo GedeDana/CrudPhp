@@ -107,5 +107,27 @@ class transaksi extends database
         return $rows['total'];
 
     }
+
+    function search_data($keyword){
+        $sql = "SELECT a.nama_anggota, a.nim_anggota, b.judul_buku, c.tanggal_pinjam, c.tanggal_kembali 
+        FROM transaksi_pinjam c INNER JOIN buku b
+        ON c.kode_buku = b.kode_buku INNER JOIN anggota_perpus a
+        ON c.id_anggota = a.id_anggota WHERE status ='Pinjam' AND
+        nama_anggota LIKE '%$keyword%' OR
+        nim_anggota LIKE '%$keyword%' OR
+        judul_buku LIKE '%$keyword%' OR
+        tanggal_pinjam LIKE '%$keyword%' OR
+        tanggal_kembali LIKE '%$keyword%'";
+       
+               
+        $result = mysqli_query(parent::__construct(), $sql);
+        
+        while($rows = mysqli_fetch_assoc($result)){
+            $data[] = $rows;
+        }
+
+        return $data;
+    }
+
    
 }

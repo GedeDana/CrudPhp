@@ -54,7 +54,21 @@ class anggota extends database {
 
     }
 
+    function search_data($keyword){
+        $sql = "SELECT * FROM anggota_perpus WHERE
+        nama_anggota LIKE '%$keyword%' OR
+        jurusan_anggota LIKE '%$keyword%' OR
+        angkatan_anggota LIKE '%$keyword%' OR
+        nim_anggota LIKE '%$keyword%'";
+               
+        $result = mysqli_query(parent::__construct(), $sql);
+        
+        while($rows = mysqli_fetch_assoc($result)){
+            $data[] = $rows;
+        }
 
+        return $data;
+    }
 
 }
 

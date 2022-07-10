@@ -48,7 +48,8 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../asset/css/easion.css">
     <script src="https://use.fontawesome.com/7d6592d6d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-    <script src="../js/chart-js-config.js"></script>
+    <script src="../asset/js/chart-js-config.js"></script>
+
     <title>Our Book</title>
 </head>
 
@@ -62,7 +63,7 @@ if (isset($_POST['submit'])) {
                 <a href="../index.php" class="easion-logo"><i class="fas fa-book"></i><span>OurPerpus</span></a>
             </header>
             <nav class="dash-nav-list">
-                <a href="./index.php" class="dash-nav-item">
+            <a href="../index.php" class="dash-nav-item">
                     <i class="fas fa-home"></i> Dashboard </a>
                 <div class="dash-nav-dropdown">
                     <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">

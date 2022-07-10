@@ -93,6 +93,8 @@ if( !isset($_SESSION["login"])) {
             </header>
             <main class="dash-content">
                 <div class="container-fluid">
+                <h3><i class="fa-solid fa-gauge mr-30"></i>DASHBOARD</h3><hr>
+                <br>
                     <div class="row dash-row">
                         <div class="col-xl-4">
                             <div class="stats stats-primary">
@@ -113,7 +115,7 @@ if( !isset($_SESSION["login"])) {
                                 <h3 class="stats-title"> Jumlah Buku </h3>
                                 <div class="stats-content">
                                     <div class="stats-icon">
-                                        <i class="fas fa-book"></i>
+                                        <i class="fas fa-receipt"></i>
                                     </div>
                                     <div class="stats-data">
                                         <div class="stats-number"><?php echo $buku->show_count()  ?></div>
@@ -124,7 +126,7 @@ if( !isset($_SESSION["login"])) {
                         </div>
                         <div class="col-xl-4">
                             <div class="stats stats-danger">
-                                <h3 class="stats-title"> Jumlah Peminjaman </h3>
+                                <h3 class="stats-title"> Jumlah Transaksi </h3>
                                 <div class="stats-content">
                                     <div class="stats-icon">
                                         <i class="fas fa-phone"></i>
@@ -135,6 +137,7 @@ if( !isset($_SESSION["login"])) {
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                
                 </div>

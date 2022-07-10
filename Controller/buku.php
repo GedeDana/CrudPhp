@@ -103,6 +103,28 @@ class buku extends database {
 
     }
 
+    function search_data($keyword){
+        $sql = "SELECT b.kode_buku, b.judul_buku, b.pengarang, b.penerbit, b.jumlah_halaman, b.tahun_terbit, b.id_status, k.nama_kategori
+        FROM buku b
+        INNER JOIN kategori_buku k
+        ON b.id_kategori = k.id_kategori WHERE b.id_status ='1' AND
+        kode_buku LIKE '%$keyword%' OR
+        judul_buku LIKE '%$keyword%' OR
+        penerbit LIKE '%$keyword%' OR
+        jumlah_halaman LIKE '%$keyword%' OR
+        pengarang LIKE '%$keyword%' OR
+        tahun_terbit LIKE '%$keyword%' OR
+        nama_kategori LIKE '%$keyword%'";
+               
+        $result = mysqli_query(parent::__construct(), $sql);
+        
+        while($rows = mysqli_fetch_assoc($result)){
+            $data[] = $rows;
+        }
+
+        return $data;
+    }
+
 }
 
 ?>
